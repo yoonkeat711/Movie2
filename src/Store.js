@@ -1,21 +1,20 @@
-import { observable, action, computed } from "mobx";
-
-export class LoginState {
-    @observable isLoggedIn = false;
-
-    constructor(value) {
-        this.isLoggedIn = value
-    }
-}
+import {observable, action, computed} from 'mobx';
+import {CORRECT_PASSWORD, CORRECT_USERNAME} from './constants';
 
 export class LoginStore {
-    @observable loginState = false;
+  @observable loginState = false;
 
-    @action updateLoginState = (value) => {
-        this.loginState = value;
-    }
+  @action updateLoginState = (username, password) => {
+    if (username === CORRECT_USERNAME && password === CORRECT_PASSWORD) {
+      this.loginState = true;
+    } else this.loginState = false;
+  };
 
-    @computed getLoginState() {
-        return this.loginState;
-    }
+  @action logout = () => {
+      this.loginState = true;
+  }
+
+  @computed getLoginState() {
+    return this.loginState;
+  }
 }
