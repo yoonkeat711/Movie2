@@ -11,7 +11,7 @@ export class LoginStore {
   };
 
   @action logout = () => {
-      this.loginState = true;
+      this.loginState = false;
   }
 
   @computed getLoginState() {
