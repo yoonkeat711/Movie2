@@ -46,7 +46,7 @@ const Dashboard = ({navigation}) => {
     fetchData();
   }, []);
 
-  const renderItem = ({item, index}) => {
+  const renderItem = ({item, _}) => {
     return (
       <View>
         <Image
@@ -80,19 +80,19 @@ const Dashboard = ({navigation}) => {
   };
 
   const onPressLogout = async () => {
-    store.updateLoginState(false);
-    const loginState = JSON.stringify(store.loginState);
+    store.logout();
+    const loginState = JSON.stringify(store.getLoginState());
     await AsyncStorage.setItem(LOGIN_STORAGE_KEY, loginState);
     navigation.navigate('Login');
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{flexDirection: 'row', justifyContent: "space-between"}}>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.headerContainer}>
           <View />
-        <Text style={{fontWeight: 'bold', paddingLeft: 35}}>Dashboard</Text>
+        <Text style={styles.title}>Dashboard</Text>
         <TouchableOpacity
-          style={{alignItems: 'flex-end'}}
+          style={styles.logout}
           onPress={onPressLogout}>
           <Text>Logout</Text>
         </TouchableOpacity>
@@ -107,6 +107,16 @@ const Dashboard = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1
+  },
+  headerContainer: {
+    flexDirection: 'row', 
+    justifyContent: "space-between",
+  },
+  title: {
+    fontWeight: 'bold', paddingLeft: 55,
+  },
   container: {
     flex: 1,
   },
@@ -119,9 +129,10 @@ const styles = StyleSheet.create({
   titleContainer: {
     paddingVertical: 5,
   },
-  title: {
-    fontWeight: 'bold',
-  },
+  logout: {
+    alignItems: 'flex-end',
+    paddingRight: 5,
+  }
 });
 
 export default Dashboard;
